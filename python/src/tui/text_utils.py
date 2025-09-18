@@ -1,5 +1,7 @@
 """Text utility functions for TUI components."""
 
+import os
+import sys
 from typing import List, Iterable
 from wcwidth import wcswidth
 
@@ -115,3 +117,15 @@ def truncate_with_ellipsis(text: str, width: int, ellipsis: str = "...") -> str:
         acc += w
         out_chars.append(ch)
     return "".join(out_chars) + ellipsis
+
+
+def is_iterm2() -> bool:
+    """Check if running in iTerm2."""
+    return os.environ.get('TERM_PROGRAM') == 'iTerm.app'
+
+
+def clear_iterm2_scrollback() -> None:
+    """Clear iTerm2 scrollback buffer."""
+    if is_iterm2():
+        sys.stdout.write('\033[2J\033[H\033[3J')
+        sys.stdout.flush()

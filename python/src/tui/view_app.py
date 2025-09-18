@@ -10,6 +10,7 @@ from .commit_details_view import CommitDetailsView
 from .chat_view import ChatView
 from .layout_manager import LayoutManager
 from .pane_renderer import PaneRenderer
+from .text_utils import clear_iterm2_scrollback
 
 
 class TigsViewApp:
@@ -108,6 +109,8 @@ class TigsViewApp:
             
             # Check minimum size
             if width < self.MIN_WIDTH or height < self.MIN_HEIGHT:
+                # Clear iTerm2 scrollback buffer + standard curses clear
+                clear_iterm2_scrollback()
                 stdscr.clear()
                 msg = f"Terminal too small: {width}x{height} (min: {self.MIN_WIDTH}x{self.MIN_HEIGHT})"
                 try:
@@ -120,7 +123,8 @@ class TigsViewApp:
                     self.running = False
                 continue
             
-            # Clear screen
+            # Clear iTerm2 scrollback buffer + standard curses clear
+            clear_iterm2_scrollback()
             stdscr.clear()
             
             # Calculate column widths using layout manager for consistency with store

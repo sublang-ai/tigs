@@ -13,6 +13,7 @@ from .messages_view import MessageView
 from .logs_view import LogsView
 from .layout_manager import LayoutManager
 from .pane_renderer import PaneRenderer
+from .text_utils import clear_iterm2_scrollback
 
 
 class TigsStoreApp:
@@ -153,7 +154,8 @@ class TigsStoreApp:
             # Reset to blocking input for normal operation
             stdscr.timeout(-1)
             
-            # Clear screen
+            # Clear iTerm2 scrollback buffer + standard curses clear
+            clear_iterm2_scrollback()
             stdscr.clear()
             
             # Calculate pane dimensions
